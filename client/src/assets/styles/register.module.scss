@@ -1,0 +1,95 @@
+@import "./variables.scss";
+@import "./breakpoints.scss";
+
+.register {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(216, 216, 216);
+  // background-size: cover;
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 33%;
+    padding: 40px;
+    background-color: white;
+    border-radius: 20px;
+
+    @include lg {
+      width: 60%
+    }
+
+    @include mm {
+      width: 80%
+    }
+
+    &_form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+
+      input {
+        width: 100%;
+        padding: 7px 15px;
+        // background-color: transparent;
+        // border: none;
+        border-bottom: 1px solid rgba(108, 99, 99, 0.3);
+        outline: none;
+        text-align: center;
+        color: black;
+
+        // input:not(:placeholder-shown):focus {
+        //   background: transparent;  */
+        // }
+
+        &::placeholder {
+          // color: rgb(47, 46, 46);
+        }
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        cursor: pointer;
+        color: rgb(47, 46, 46);
+        font-size: 14px;
+
+        img {
+          width: 25px;
+        }
+      }
+
+      button {
+        margin-top: 15px;
+
+        @include buttonStyle;
+        width: 50%;
+
+        &:hover {
+          box-shadow: 0 0 10px 3px rgb(255, 150, 150);
+        }
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: rgb(47, 46, 46);
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
