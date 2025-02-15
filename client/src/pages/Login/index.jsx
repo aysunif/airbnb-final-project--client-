@@ -21,18 +21,21 @@ const Login = () => {
         "http://localhost:5000/api/auth/login",
         { email, password }
       );
-
+       console.log(response)
       /* Get data after fetching */
-      const loggedIn = await response.json();
+      // const loggedIn = await response.json();
 
-      if (loggedIn) {
+      if (response.data) {
         dispatch(
           setLogin({
-            user: loggedIn.user,
-            token: loggedIn.token,
+            user: response.data.user,
+            token: response.data.token,
           })
         );
-        navigate("/");
+
+        
+          navigate("/");
+       
       }
     } catch (err) {
       console.log("Login failed", err.message);
