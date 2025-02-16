@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import CreateListing from "./pages/CreateListing";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Route>
           <Route path="*" element={<NotFound />} />
       </Routes>
