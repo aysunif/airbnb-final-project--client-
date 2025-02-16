@@ -1,35 +1,40 @@
 import styles from "../../assets/styles/createListing.module.scss";
 import { categories, types } from "../../data";
-import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
-import variables from "../../assets/styles/variables.module.scss";
-import { DndContext, useDroppable, useDraggable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IoIosImages } from "react-icons/io";
 import { BiTrash } from 'react-icons/bi';
 import { useState } from "react";
+import { DndContext, useDroppable, useDraggable } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 const CreateListing = () => {
-    const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState([]);
 
-    const handleUploadPhotos = (event) => {
-      setPhotos((prevPhotos) => [...prevPhotos, ...Array.from(event.target.files)]);
-    };
-    
-    const handleRemovePhoto = (index) => {
-      setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
-    };
-    
-    const handleDragEnd = (event) => {
-      const { active, over } = event;
-      if (active.id !== over.id) {
-        setPhotos((prevPhotos) => {
-          const reorderedPhotos = [...prevPhotos];
-          const [movedPhoto] = reorderedPhotos.splice(active.id, 1);
-          reorderedPhotos.splice(over.id, 0, movedPhoto);
-          return reorderedPhotos;
-        });
-      }
-    };    
+  const handleUploadPhotos = (event) => {
+    setPhotos((prevPhotos) => [...prevPhotos, ...Array.from(event.target.files)]);
+  };
+
+  const handleRemovePhoto = (index) => {
+    setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+  
+    if (!active || !over) return;
+  
+    if (active.id !== over.id) {
+      const oldIndex = parseInt(active.id, 10);
+      const newIndex = parseInt(over.id, 10);
+  
+      setPhotos((prevPhotos) => {
+        const reorderedPhotos = [...prevPhotos];
+        const [movedPhoto] = reorderedPhotos.splice(oldIndex, 1);
+        reorderedPhotos.splice(newIndex, 0, movedPhoto);
+        return reorderedPhotos;
+      });
+    }
+  };
+  
 
   return (
     <div className={styles["create-listing"]}>
@@ -70,7 +75,7 @@ const CreateListing = () => {
 
           <DndContext onDragEnd={handleDragEnd}>
             <SortableContext
-              items={photos.map((_, index) => index.toString())}
+              items={photos.map((_, index) => `photo-${index}`)}
               strategy={verticalListSortingStrategy}
             >
               <div className={styles["photos"]}>
@@ -93,16 +98,14 @@ const CreateListing = () => {
                   </>
                 ) : (
                   <>
-                    {photos.map((photo, index) => {
-                      return (
-                        <DraggablePhoto
-                          key={index}
-                          index={index}
-                          photo={photo}
-                          handleRemovePhoto={handleRemovePhoto}
-                        />
-                      );
-                    })}
+                    {photos.map((photo, index) => (
+                      <DraggablePhoto
+                        key={index}
+                        index={index}
+                        photo={photo}
+                        handleRemovePhoto={handleRemovePhoto}
+                      />
+                    ))}
                     <input
                       id="image"
                       type="file"
@@ -133,18 +136,18 @@ const CreateListing = () => {
 };
 
 const DraggablePhoto = ({ index, photo, handleRemovePhoto }) => {
-  const { attributes, listeners, setNodeRef } = useDraggable({
-    id: index.toString(),
-  });
-
-  return (
-    <div ref={setNodeRef} {...listeners} {...attributes} className={styles["photo"]}>
-      <img src={URL.createObjectURL(photo)} alt="Uploaded" />
-      <button type="button" onClick={() => handleRemovePhoto(index)}>
-        <BiTrash />
-      </button>
-    </div>
-  );
-};
+    const { attributes, listeners, setNodeRef } = useDraggable({
+      id: `photo-${index}`, 
+    });
+  
+    return (
+      <div ref={setNodeRef} {...listeners} {...attributes} className={styles["photo"]}>
+        <img src={URL.createObjectURL(photo)} alt="Uploaded" />
+        <button type="button" onClick={() => handleRemovePhoto(index)}>
+          <BiTrash />
+        </button>
+      </div>
+    );
+  };
 
 export default CreateListing;
