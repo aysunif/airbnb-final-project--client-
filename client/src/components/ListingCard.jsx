@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "../assets/styles/listingCard.module.scss";
 import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+
 const ListingCard = ({
   listingId,
   creator,
@@ -24,9 +26,12 @@ const ListingCard = ({
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % listingPhotoPaths.length);
   };
+  const navigate = useNavigate();
   return (
     <>
-      <div className={styles["listing-card"]}>
+      <div className={styles["listing-card"]}   onClick={() => {
+        navigate(`/properties/${listingId}`);
+      }}>
         <div className={styles["slider-container"]}>
           <div
             className={styles["slider"]}
