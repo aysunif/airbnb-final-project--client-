@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
@@ -85,6 +86,14 @@ const ListingDetails = () => {
     }
   };
 
+  const handleImageClick = (image) => {
+    setSelectedImage(image); 
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null); 
+  };
+
   return loading ? (
     <Loader />
   ) : (
@@ -94,10 +103,21 @@ const ListingDetails = () => {
           <h1>{listing.title}</h1>
         </div>
         <div className={styles["photos"]}>
-          {listing.listingPhotoPaths?.map((item) => (
-            <img src={item} alt="listing photo" />
+          {listing.listingPhotoPaths?.map((item, index) => (
+            <img
+              key={index}
+              src={item}
+              alt="listing photo"
+              onClick={() => handleImageClick(item)}
+            />
           ))}
         </div>
+
+        {selectedImage && (
+          <div className={styles["enlarged-image"]} onClick={closeImage}>
+            <img src={selectedImage} alt="Enlarged" />
+          </div>
+        )}
 
         <h2>
           {listing.type} in {listing.city}, {listing.province},{" "}
