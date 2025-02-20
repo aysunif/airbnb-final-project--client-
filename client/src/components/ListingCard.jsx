@@ -1,8 +1,14 @@
 import { useState } from "react";
 import styles from "../assets/styles/listingCard.module.scss";
-import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material";
+import {
+  ArrowForwardIos,
+  ArrowBackIosNew,
+  Favorite,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishList } from "../redux/state";
+import axios from "axios";
 
 const ListingCard = ({
   listingId,
@@ -31,7 +37,30 @@ const ListingCard = ({
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % listingPhotoPaths.length);
   };
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  /* ADD TO WISHLIST */
+  const user = useSelector((state) => state.user);
+  const wishList = user?.wishList || [];
+
+  const isLiked = wishList?.find((item) => item?._id === listingId);
+
+  const patchWishList = async () => {
+    if (user?._id !== creator._id) {
+      const response = await axios.patch(
+        `http://localhost:5000/api/users/${user?._id}/${listingId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch(setWishList(response.data.wishList));
+    } else { return }
+  };
+
   return (
     <>
       <div
@@ -85,12 +114,29 @@ const ListingCard = ({
           </>
         ) : (
           <>
-            <p>{startDate} - {endDate}</p>
+            <p>
+              {startDate} - {endDate}
+            </p>
             <p>
               <span>${totalPrice}</span> total
             </p>
           </>
         )}
+
+        <button
+          className={styles["favorite"]}
+          onClick={(e) => {
+            e.stopPropagation();
+            patchWishList();
+          }}
+          disabled={!user}
+        >
+          {isLiked ? (
+            <Favorite sx={{ color: "red" }} />
+          ) : (
+            <Favorite sx={{ color: "white" }} />
+          )}
+        </button>
       </div>
     </>
   );

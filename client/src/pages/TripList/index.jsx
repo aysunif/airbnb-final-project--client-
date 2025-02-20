@@ -4,6 +4,7 @@ import Loader from "../../components/Loader";
 import { setTripList } from "../../redux/state";
 import { useEffect, useState } from "react";
 import ListingCard from "../../components/ListingCard";
+import axios from "axios";
 
 
 const TripList = () => {
@@ -15,18 +16,12 @@ const TripList = () => {
 
   const getTripList = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/${userId}/trips`,
-        {
-          method: "GET",
-        }
-      );
-
-      const data = await response.json();
-      dispatch(setTripList(data));
+      const response = await axios.get(`http://localhost:5000/api/users/${userId}/trips`);
+      
+      dispatch(setTripList(response.data));
       setLoading(false);
     } catch (err) {
-      console.log("Fetch Trip List failed!", err.message);
+      console.log("Get Trip List failed!", err.message);
     }
   };
  
