@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "../assets/styles/listingCard.module.scss";
 import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
 
 const ListingCard = ({
   listingId,
@@ -13,6 +14,10 @@ const ListingCard = ({
   category,
   type,
   price,
+  startDate,
+  endDate,
+  totalPrice,
+  booking,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,9 +34,12 @@ const ListingCard = ({
   const navigate = useNavigate();
   return (
     <>
-      <div className={styles["listing-card"]}   onClick={() => {
-        navigate(`/properties/${listingId}`);
-      }}>
+      <div
+        className={styles["listing-card"]}
+        onClick={() => {
+          navigate(`/properties/${listingId}`);
+        }}
+      >
         <div className={styles["slider-container"]}>
           <div
             className={styles["slider"]}
@@ -39,13 +47,11 @@ const ListingCard = ({
           >
             {listingPhotoPaths?.map((photo, index) => (
               <div key={index} className={styles["slide"]}>
-                <img
-                  src={`http://localhost:5000/${photo?.replace("public", "")}`}
-                  alt={`photo ${index + 1}`}
-                />
+                <img src={photo} alt={`photo ${index + 1}`} />
                 <div
                   className={styles["prev-button"]}
                   onClick={(e) => {
+                    e.stopPropagation();
                     goToPrevSlide(e);
                   }}
                 >
@@ -54,6 +60,7 @@ const ListingCard = ({
                 <div
                   className={styles["next-button"]}
                   onClick={(e) => {
+                    e.stopPropagation();
                     goToNextSlide(e);
                   }}
                 >
@@ -68,10 +75,22 @@ const ListingCard = ({
           {city}, {province}, {country}
         </h3>
         <p>{category}</p>
-        <p>{type}</p>
-        <p>
-            <span>${price}</span> night
-          </p>
+
+        {!booking ? (
+          <>
+            <p>{type}</p>
+            <p>
+              <span>${price}</span> night
+            </p>
+          </>
+        ) : (
+          <>
+            <p>{startDate} - {endDate}</p>
+            <p>
+              <span>${totalPrice}</span> total
+            </p>
+          </>
+        )}
       </div>
     </>
   );

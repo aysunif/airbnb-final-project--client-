@@ -39,7 +39,7 @@ const Listing = () => {
       <div className={styles["category-list"]}>
         {categories?.map((category, index) => (
           <div
-            className={styles["category"]}
+            className={`${styles.category} ${category.label === selectedCategory ? styles["selected"] : ""}`}
             key={index}
             onClick={() => {
               setSelectedCategory(category.label);
@@ -66,6 +66,7 @@ const Listing = () => {
               category,
               type,
               price,
+              booking=false
             }) => (
               <ListingCard
                 listingId={_id}
@@ -77,6 +78,7 @@ const Listing = () => {
                 category={category}
                 type={type}
                 price={price}
+                booking={booking}
               />
             )
           )}

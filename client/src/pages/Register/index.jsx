@@ -54,6 +54,8 @@ const Register = () => {
         }
       );
 
+      console.log(response.data.user.profileImagePath);
+
       if (response.status === 200) {
         navigate("/login");
       }
@@ -115,7 +117,7 @@ const Register = () => {
               id="image"
               type="file"
               name="profileImage"
-              accept="image/*"
+              accept="image/*" 
               style={{ display: "none" }}
               onChange={handleChange}
               required

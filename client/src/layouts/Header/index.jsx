@@ -53,10 +53,7 @@ const Header = () => {
               <AccountCircle sx={{ color: variables.darkgrey }} />
             ) : (
               <img
-                src={`http://localhost:5000/${user.profileImagePath.replace(
-                  "public",
-                  ""
-                )}`}
+                src={user.profileImagePath}
                 alt="profile photo"
                 style={{ objectFit: "cover", borderRadius: "50%" }}
               />

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "../../assets/styles/listingDetails.module.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { facilities } from "../../data";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import Loader from "../../components/Loader";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,40 @@ const ListingDetails = () => {
   const end = new Date(dateRange[0].endDate);
   const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
 
+  /* SUBMIT BOOKING */
+  const customerId = useSelector((state) => state?.user?._id);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const bookingForm = {
+        customerId,
+        listingId,
+        hostId: listing.creator._id,
+        startDate: dateRange[0].startDate.toDateString(),
+        endDate: dateRange[0].endDate.toDateString(),
+        totalPrice: listing.price * dayCount,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/bookings/create",
+        bookingForm,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        navigate(`/${customerId}/trips`);
+      }
+    } catch (err) {
+      console.log("Submit Booking Failed.", err.message);
+    }
+  };
+
   return loading ? (
     <Loader />
   ) : (
@@ -60,10 +95,7 @@ const ListingDetails = () => {
         </div>
         <div className={styles["photos"]}>
           {listing.listingPhotoPaths?.map((item) => (
-            <img
-              src={`http://localhost:5000/${item.replace("public", "")}`}
-              alt="listing photo"
-            />
+            <img src={item} alt="listing photo" />
           ))}
         </div>
 
@@ -78,12 +110,7 @@ const ListingDetails = () => {
         <hr />
 
         <div className={styles["profile"]}>
-          <img
-            src={`http://localhost:5000/${listing.creator.profileImagePath.replace(
-              "public",
-              ""
-            )}`}
-          />
+          <img src={listing.creator.profileImagePath} />
           <h3>
             Hosted by {listing.creator.firstName} {listing.creator.lastName}
           </h3>
@@ -132,7 +159,11 @@ const ListingDetails = () => {
               <p>Start Date: {dateRange[0].startDate.toDateString()}</p>
               <p>End Date: {dateRange[0].endDate.toDateString()}</p>
 
-              <button className={styles["button"]} type="submit">
+              <button
+                className={styles["button"]}
+                type="submit"
+                onClick={handleSubmit}
+              >
                 BOOKING
               </button>
             </div>
