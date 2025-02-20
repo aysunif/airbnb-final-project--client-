@@ -9,7 +9,7 @@ import variables from "../../assets/styles/variables.module.scss";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../../assets/styles/navbar.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../../redux/state";
 
 const Header = () => {
@@ -19,6 +19,10 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
+  const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
+
   return (
     <>
       <div className={styles["navbar"]}>
@@ -27,9 +31,19 @@ const Header = () => {
         </a>
 
         <div className={styles["navbar_search"]}>
-          <input type="text" placeholder="Search ..." />
-          <IconButton>
-            <Search sx={{ color: variables.pinkred }} />
+          <input
+            type="text"
+            placeholder="Search ..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <IconButton disabled={search === ""}>
+            <Search
+              sx={{ color: variables.pinkred }}
+              onClick={() => {
+                navigate(`/properties/search/${search}`);
+              }}
+            />
           </IconButton>
         </div>
 
