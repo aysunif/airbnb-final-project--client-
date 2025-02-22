@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../../assets/styles/login.module.scss";
 import { setLogin } from "../../redux/state";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -13,11 +13,11 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const token = Cookies.get('token')
+    const token = Cookies.get("token");
 
     useEffect(() => {
         if (token) {
-            navigate('/')
+            navigate('/admin/dashboard')
         }
     }, [])
 
