@@ -24,6 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/login/:token/:user" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/create-listing" element={<CreateListing />} />
