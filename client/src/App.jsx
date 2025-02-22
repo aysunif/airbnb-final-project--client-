@@ -12,14 +12,17 @@ import WishList from "./pages/WishList";
 import PropertyList from "./pages/PropertyList";
 import ReservationList from "./pages/ReservationList";
 import SearchPage from "./pages/SearchPage";
+// import { Toaster } from "react-hot-toast";
 
 function App() {
 
   return (
     <>
+    {/* <Toaster /> */}
       <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/login/:token/:user" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/create-listing" element={<CreateListing />} />
