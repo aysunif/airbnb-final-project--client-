@@ -18,7 +18,8 @@
 
   .title {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+    gap: 20px;
     align-items: center;
 
     @include sm {
@@ -56,9 +57,9 @@
     img {
       max-width: 300px;
       border-radius: 10px;
-      cursor: pointer; 
-      transition: filter 0.3s ease; 
-      
+      cursor: pointer;
+      transition: filter 0.3s ease;
+
       &:hover {
         filter: brightness(0.7);
       }
@@ -71,18 +72,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; 
+    z-index: 9999;
 
     img {
       max-width: 90%;
       max-height: 90%;
       border-radius: 10px;
       object-fit: contain;
-      cursor: pointer; 
+      cursor: pointer;
     }
   }
 
@@ -94,7 +95,7 @@
     display: flex;
     gap: 20px;
     align-items: center;
-    
+
     img {
       width: 60px;
       height: 60px;

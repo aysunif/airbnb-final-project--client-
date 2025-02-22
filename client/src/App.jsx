@@ -12,16 +12,20 @@ import WishList from "./pages/WishList";
 import PropertyList from "./pages/PropertyList";
 import ReservationList from "./pages/ReservationList";
 import SearchPage from "./pages/SearchPage";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminLogin from "./pages/Admin/AdminLogin";
 
 function App() {
 
   return (
     <>
       <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminLogin />} />
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/properties/:listingId" element={<ListingDetails />} />
           <Route path="/:userId/trips" element={<TripList />} />
@@ -31,7 +35,10 @@ function App() {
           <Route path="/properties/search/:search" element={<SearchPage />} />
 
         </Route>
-          <Route path="*" element={<NotFound />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )

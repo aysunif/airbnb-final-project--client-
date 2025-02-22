@@ -8,6 +8,7 @@ import { DateRange } from "react-date-range";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Tag } from "antd";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -62,7 +63,7 @@ const ListingDetails = () => {
       const bookingForm = {
         customerId,
         listingId,
-        hostId: listing.creator._id,
+        hostId: listing.creator?._id,
         startDate: dateRange[0].startDate.toDateString(),
         endDate: dateRange[0].endDate.toDateString(),
         totalPrice: listing.price * dayCount,
@@ -87,11 +88,11 @@ const ListingDetails = () => {
   };
 
   const handleImageClick = (image) => {
-    setSelectedImage(image); 
+    setSelectedImage(image);
   };
 
   const closeImage = () => {
-    setSelectedImage(null); 
+    setSelectedImage(null);
   };
 
   return loading ? (
@@ -101,7 +102,11 @@ const ListingDetails = () => {
       <div className={styles["listing-details"]}>
         <div className={styles["title"]}>
           <h1>{listing.title}</h1>
-        </div>
+          <h1>
+            <Tag color={listing.isApproved ? "green" : "red"}>
+              {listing.isApproved ? "Active" : "Pending"}
+            </Tag>
+          </h1>        </div>
         <div className={styles["photos"]}>
           {listing.listingPhotoPaths?.map((item, index) => (
             <img
@@ -130,9 +135,9 @@ const ListingDetails = () => {
         <hr />
 
         <div className={styles["profile"]}>
-          <img src={listing.creator.profileImagePath} />
+          <img src={listing.creator?.profileImagePath} />
           <h3>
-            Hosted by {listing.creator.firstName} {listing.creator.lastName}
+            Hosted by {listing.creator?.firstName} {listing.creator?.lastName}
           </h3>
         </div>
         <hr />

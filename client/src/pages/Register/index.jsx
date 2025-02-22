@@ -2,8 +2,10 @@ import styles from "../../assets/styles/register.module.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -12,6 +14,13 @@ const Register = () => {
     confirmPassword: "",
     profileImage: null,
   });
+  const token = Cookies.get("token")
+
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+  }, [])
 
   const handleChange = (e) => {
     const { name, value, files, type } = e.target;
@@ -28,11 +37,9 @@ const Register = () => {
   useEffect(() => {
     setPasswordMatch(
       formData.password === formData.confirmPassword ||
-        formData.confirmPassword === ""
+      formData.confirmPassword === ""
     );
   });
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +50,7 @@ const Register = () => {
       Object.entries(formData).forEach(([key, value]) => {
         register_form.append(key, value);
       });
-      
+
       const response = await axios.post(
         "http://localhost:5000/api/auth/register",
         register_form,
@@ -117,7 +124,7 @@ const Register = () => {
               id="image"
               type="file"
               name="profileImage"
-              accept="image/*" 
+              accept="image/*"
               style={{ display: "none" }}
               onChange={handleChange}
               required

@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "../../assets/styles/navbar.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../../redux/state";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [dropdownMenu, setDropdownMenu] = useState(false);
@@ -92,6 +93,7 @@ const Header = () => {
               <Link
                 to="/login"
                 onClick={() => {
+                  Cookies.remove("token");
                   dispatch(setLogout());
                 }}
               >

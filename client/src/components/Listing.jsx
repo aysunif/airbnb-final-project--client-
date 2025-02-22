@@ -17,14 +17,14 @@ const Listing = () => {
       const url =
         selectedCategory !== "All"
           ? `http://localhost:5000/api/listings?category=${selectedCategory}`
-          : "http://localhost:5000/api/listings";
+          : "http://localhost:5000/api/listings/active";
 
       const response = await axios.get(url);
 
       dispatch(setListings({ listings: response.data }));
       setLoading(false);
     } catch (err) {
-      console.log("Fetch Listings Failed", err.message);
+      console.log("Fetch Listings Failed", err);
     }
   };
 

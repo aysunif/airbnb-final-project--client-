@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../assets/styles/login.module.scss";
 import { setLogin } from "../../redux/state";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
-
+  const token = Cookies.get('token')
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +27,6 @@ const Login = () => {
         "http://localhost:5000/api/auth/login",
         { email, password }
       );
-       console.log(response)
       /* Get data after fetching */
       // const loggedIn = await response.json();
 
@@ -32,11 +37,9 @@ const Login = () => {
             token: response.data.token,
           })
         );
-
-        
-          navigate("/");
-       
+        navigate("/");
       }
+      Cookies.set("token", response.data.token)
     } catch (err) {
       console.log("Login failed", err.message);
     }

@@ -11,32 +11,33 @@ const TripList = () => {
   const [loading, setLoading] = useState(true);
   const userId = useSelector((state) => state.user._id);
   const tripList = useSelector((state) => state.user.tripList);
+  console.log(userId, tripList);
 
   const dispatch = useDispatch();
 
   const getTripList = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/users/${userId}/trips`);
-      
+      console.log(response);
       dispatch(setTripList(response.data));
       setLoading(false);
     } catch (err) {
       console.log("Get Trip List failed!", err.message);
     }
   };
- 
+
   useEffect(() => {
     getTripList();
   }, []);
 
-  return loading ? <Loader /> : 
-  <>
-  <h1 className={styles["title-list"]}>Your Trip List</h1>
-  <div className={styles["list"]}>
-        {tripList?.map(({ listingId, hostId, startDate, endDate, totalPrice, booking=true }) => (
+  return loading ? <Loader /> :
+    <>
+      <h1 className={styles["title-list"]}>Your Trip List</h1>
+      <div className={styles["list"]}>
+        {tripList?.map(({ listingId, hostId, startDate, endDate, totalPrice, booking = true }) => (
           <ListingCard
             listingId={listingId._id}
-            creator={hostId._id}
+            creator={hostId?._id}
             listingPhotoPaths={listingId.listingPhotoPaths}
             city={listingId.city}
             province={listingId.province}
@@ -49,7 +50,7 @@ const TripList = () => {
           />
         ))}
       </div>
-  </>;
+    </>;
 };
 
 export default TripList;
