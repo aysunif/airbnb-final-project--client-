@@ -1,18 +1,24 @@
 import React from "react";
-import { Table, Button, Popconfirm, Tag } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons"; 
+import { Table, Button, Popconfirm, Tag, Grid } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
+
+const { useBreakpoint } = Grid;
 
 const ListingTable = ({ listings, onApprove, onDelete, onDetails }) => {
+  const screens = useBreakpoint(); 
+
   const columns = [
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      responsive: ["md"], 
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (price) => `$${price}`, 
     },
     {
       title: "Status",
@@ -49,16 +55,23 @@ const ListingTable = ({ listings, onApprove, onDelete, onDetails }) => {
           <Button
             style={{ marginLeft: 8 }}
             icon={<InfoCircleOutlined />}
-            onClick={() => onDetails(record._id)} 
+            onClick={() => onDetails(record._id)}
           >
-            Details
+            {screens.md ? "Details" : null} 
           </Button>
         </>
       ),
     },
   ];
 
-  return <Table dataSource={listings} columns={columns} rowKey="_id" />;
+  return (
+    <Table
+      dataSource={listings}
+      columns={columns}
+      rowKey="_id"
+      scroll={{ x: screens.xs ? 500 : undefined }} 
+    />
+  );
 };
 
 export default ListingTable;

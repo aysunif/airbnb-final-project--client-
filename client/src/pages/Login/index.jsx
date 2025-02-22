@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styles from "../../assets/styles/login.module.scss";
 import { setLogin } from "../../redux/state";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";

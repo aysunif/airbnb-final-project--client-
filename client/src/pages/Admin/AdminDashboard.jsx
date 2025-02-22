@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tabs, message, Modal, Tag } from "antd";
+import { Tabs, message, Modal, Tag, Grid } from "antd";
 import UserTable from "../../components/UserTable";
 import ListingTable from "../../components/ListingTable";
 import {
@@ -11,14 +11,27 @@ import {
     approveListing,
     getListingDetails,
 } from "../../api/admin";
-
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import styles from "../../assets/styles/AdminDashboard.module.scss";
+import { useSelector } from "react-redux";
 const { TabPane } = Tabs;
+const { useBreakpoint } = Grid;
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [listings, setListings] = useState([]);
-    const [selectedListing, setSelectedListing] = useState(null); 
-    const [isModalVisible, setIsModalVisible] = useState(false); 
+    const [selectedListing, setSelectedListing] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const navigate = useNavigate();
+    const screens = useBreakpoint(); 
+    const user = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if (user?.role === 'user') {
+            navigate('/')
+        }
+    }, [])
 
     useEffect(() => {
         fetchUsers();
@@ -94,8 +107,8 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div style={{ padding: "24px" }}>
-            <Tabs defaultActiveKey="1">
+        <div className={styles.container}>
+            <Tabs defaultActiveKey="1" className={styles.tabs}>
                 <TabPane tab="Users" key="1">
                     <UserTable
                         users={users}
@@ -118,9 +131,10 @@ const AdminDashboard = () => {
                 open={isModalVisible}
                 onCancel={() => setIsModalVisible(false)}
                 footer={null}
+                width={screens.md ? "800px" : "90%"} 
             >
                 {selectedListing && (
-                    <div>
+                    <div className={styles.modalContent}>
                         <p>
                             <strong>Title:</strong> {selectedListing.title}
                         </p>
@@ -140,9 +154,10 @@ const AdminDashboard = () => {
                             <strong>Highlight:</strong> {selectedListing.highlight}
                         </p>
                         <p>
-                            <strong>Address:</strong>{" "}
-                            {selectedListing.streetAddress}, {selectedListing.aptSuite && `${selectedListing.aptSuite}, `}
-                            {selectedListing.city}, {selectedListing.province}, {selectedListing.country}
+                            <strong>Address:</strong> {selectedListing.streetAddress},{" "}
+                            {selectedListing.aptSuite && `${selectedListing.aptSuite}, `}
+                            {selectedListing.city}, {selectedListing.province},{" "}
+                            {selectedListing.country}
                         </p>
                         <p>
                             <strong>Guest Count:</strong> {selectedListing.guestCount}
@@ -158,7 +173,9 @@ const AdminDashboard = () => {
                         </p>
                         <p>
                             <strong>Amenities:</strong>{" "}
-                            {selectedListing.amenities.length > 0 ? selectedListing.amenities.join(", ") : "No amenities listed"}
+                            {selectedListing.amenities.length > 0
+                                ? selectedListing.amenities.join(", ")
+                                : "No amenities listed"}
                         </p>
                         <p>
                             <strong>Status:</strong>{" "}
