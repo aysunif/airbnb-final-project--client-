@@ -70,20 +70,20 @@ const ListingDetails = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/bookings/create",
+        "http://localhost:5000/api/bookings/create-payment",
         bookingForm,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // }
       );
 
-      if (response.status === 200) {
-        navigate(`/${customerId}/trips`);
+      if (response.data.url) {
+        window.location.href = response.data.url;
       }
     } catch (err) {
-      console.log("Submit Booking Failed.", err.message);
+      console.log("Payment Failed:", err.message);
     }
   };
 

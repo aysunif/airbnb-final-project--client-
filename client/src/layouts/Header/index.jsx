@@ -17,6 +17,7 @@ const Header = () => {
   const [dropdownMenu, setDropdownMenu] = useState(false);
 
   const user = useSelector((state) => state.user);
+  console.log(user)
 
   const dispatch = useDispatch();
 

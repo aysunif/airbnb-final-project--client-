@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styles from "../../assets/styles/login.module.scss";
 import { setLogin } from "../../redux/state";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
@@ -42,7 +41,7 @@ const Login = () => {
             token: response.data.token,
           })
         );
-        navigate("/");
+        // navigate("/");
         saveUserToStorage(response.data.token);
         // toast.success("Giriş uğurlu oldu!");
         navigate("/");
@@ -54,18 +53,41 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (token && user) {
-      const parsedUser = JSON.parse(decodeURIComponent(user)); 
-      saveUserToStorage(token);
-      dispatch(setLogin({ user: parsedUser, token }));
-      // toast.success("Successfully signed in with Google!");
+  // useEffect(() => {
+  //   if (token && user) {
+  //     const parsedUser = JSON.parse(decodeURIComponent(user)); 
+  //     saveUserToStorage(token);
+  //     dispatch(setLogin({ user: parsedUser, token }));
+  //     // toast.success("Successfully signed in with Google!");
   
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 300);
+  //   }
+  // }, [token, user, navigate]);
+  const getTokenFromQuery = () => {
+    const queryParams = new URLSearchParams(location.search);
+    return queryParams.get("token");
+  };
+
+  useEffect(() => {
+    const token = getTokenFromQuery();
+    if (token) {
+      saveUserToStorage(token);
+      localStorage.setItem("userauth", "true");
+      dispatch(
+        setLogin({
+          token: token,
+        })
+      );
+
+      // toast.success("Successfully signed in with Google!");
       setTimeout(() => {
         navigate("/");
       }, 300);
     }
-  }, [token, user, navigate]);
+  }, [location.search, navigate]);
+
 
   const handleGoogleLogin = () => {
     window.location.href = `http://localhost:5000/api/auth-user/google`; 
