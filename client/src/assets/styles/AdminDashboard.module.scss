@@ -1,0 +1,26 @@
+// AdminDashboard.module.scss
+.container {
+    padding: 24px;
+  
+    @media (max-width: 768px) {
+      padding: 12px;
+    }
+  }
+  
+  .tabs {
+    width: 100%;
+  
+    @media (max-width: 768px) {
+      overflow-x: auto;
+    }
+  }
+  
+  .modalContent {
+    p {
+      margin: 8px 0;
+  
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+    }
+  }
