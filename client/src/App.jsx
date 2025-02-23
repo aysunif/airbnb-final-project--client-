@@ -15,6 +15,7 @@ import SearchPage from "./pages/SearchPage";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLogin from "./pages/Admin/AdminLogin";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/:userId/properties" element={<PropertyList />} />
           <Route path="/:userId/reservations" element={<ReservationList />} />
           <Route path="/properties/search/:search" element={<SearchPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
 
         </Route>
         <Route path="/admin" element={<AdminLayout />}>

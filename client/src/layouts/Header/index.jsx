@@ -85,6 +85,7 @@ const Header = () => {
 
           {dropdownMenu && user && (
             <div className={styles["navbar_right_accountmenu"]}>
+              <Link to={`/profile`}>Profile</Link>
               <Link to={`/${user._id}/trips`}>Trip List</Link>
               <Link to={`/${user._id}/wishList`}>Wish List</Link>
               <Link to={`/${user._id}/properties`}>Property List</Link>

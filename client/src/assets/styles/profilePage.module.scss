@@ -1,0 +1,106 @@
+@import "./variables.module.scss";
+@import "./breakpoints.module.scss";
+
+.profileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  
+  .profileCard {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .profileImageWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .profileImage {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #ddd;
+    position: relative;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .uploadIcon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  
+    &:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+  }
+  
+  .userInfo {
+    margin-bottom: 20px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+.editButton {
+    @include buttonStyle;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    &:hover {
+      background: #b30f00;
+      color: #b30f00;
+    }
+  }
+  
+  .saveButton {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    &:hover {
+      background: #218838;
+    }
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
