@@ -43,23 +43,24 @@ const ProfilePage = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
     for (let key in updatedData) {
-      console.log(key);
+      // console.log("Appending:", key, updatedData[key])
+      // console.log(key);
       if (updatedData[key]) {
         formData.append(key, updatedData[key]);
       }
     }
-    console.log(formData);
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    // formData.append("test", "test")
+    // console.log(formData.entries());
+
 
     try {
-      console.log(formData);
+      // console.log(formData);
       const response = await axios.put(
         `http://localhost:5000/api/users/${userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       message.success("Profile updated successfully!");

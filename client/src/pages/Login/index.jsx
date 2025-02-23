@@ -111,7 +111,7 @@ const Login = () => {
               required
             />
             <button type="submit">LOG IN</button>
-            <button onClick={handleGoogleLogin} type="button">
+            <button onClick={handleGoogleLogin} type="button" class="google-login-button">
               {/* <GoogleIcon /> */}
               <span>Login</span>
               <span>With</span>
