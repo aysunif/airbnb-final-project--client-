@@ -107,6 +107,11 @@ const AdminDashboard = () => {
     };
 
     return (
+        <>
+         <Helmet>
+                <title>Airbnb | Admin Dashboard</title>
+                <meta name="description" content="admin dashboard page" />
+              </Helmet>
         <div className={styles.container}>
             <Tabs defaultActiveKey="1" className={styles.tabs}>
                 <TabPane tab="Users" key="1">
@@ -187,6 +192,7 @@ const AdminDashboard = () => {
                 )}
             </Modal>
         </div>
+        </>
     );
 };
 

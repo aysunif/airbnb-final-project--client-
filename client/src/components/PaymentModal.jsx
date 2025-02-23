@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import styles from "../assets/styles/paymentModal.module.scss";
+import { message } from "antd";
 
 const PaymentModal = ({ totalPrice, onClose, onSuccess }) => {
   const stripe = useStripe();
@@ -27,15 +28,18 @@ const PaymentModal = ({ totalPrice, onClose, onSuccess }) => {
 
       if (error) {
         console.error(error.message);
+        // message.error(`Payment failed: ${error.message}`);
         setLoading(false);
       } else {
         if (paymentIntent.status === "succeeded") {
           console.log("Payment succeeded!");
+          message.success("Payment successful!");
           onSuccess();
         }
       }
     } catch (error) {
       console.error("Error processing payment", error);
+      message.error("An error occurred while processing your payment. Please try again.");
       setLoading(false);
     }
   };

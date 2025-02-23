@@ -7,6 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("");
@@ -55,6 +56,10 @@ const AdminLogin = () => {
 
     return (
         <>
+         <Helmet>
+                <title>Airbnb | Admin Login</title>
+                <meta name="description" content="admin login page" />
+              </Helmet>
             <div className={styles["login"]}>
                 <div className={styles["login_content"]}>
                     <div>

@@ -6,19 +6,21 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { saveUserToStorage } from "../../utils/localStorage";
+import { Helmet } from "react-helmet-async";
+import { message } from "antd";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const tokenCookies = Cookies.get('token')
+  const tokenCookies = Cookies.get("token");
   const navigate = useNavigate();
 
   useEffect(() => {
     if (tokenCookies) {
-      navigate('/')
+      navigate("/");
     }
-  }, [])
+  }, []);
 
   const { token, user } = useParams();
 
@@ -31,8 +33,6 @@ const Login = () => {
         { email, password }
       );
       console.log(response);
-      /* Get data after fetching */
-      // const loggedIn = await response.json();
 
       if (response.data) {
         dispatch(
@@ -43,28 +43,18 @@ const Login = () => {
         );
         // navigate("/");
         saveUserToStorage(response.data.token);
+        Cookies.set("token", response.data.token);
         // toast.success("Giriş uğurlu oldu!");
+        message.success("Login successful!");
         navigate("/");
       }
-      Cookies.set("token", response.data.token)
     } catch (err) {
       console.log("Login failed", err.message);
+      message.error("Login failed! Please check your credentials and try again.");
       // toast.error("Giriş zamanı xəta baş verdi!");
     }
   };
 
-  // useEffect(() => {
-  //   if (token && user) {
-  //     const parsedUser = JSON.parse(decodeURIComponent(user)); 
-  //     saveUserToStorage(token);
-  //     dispatch(setLogin({ user: parsedUser, token }));
-  //     // toast.success("Successfully signed in with Google!");
-  
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 300);
-  //   }
-  // }, [token, user, navigate]);
   const getTokenFromQuery = () => {
     const queryParams = new URLSearchParams(location.search);
     return queryParams.get("token");
@@ -82,20 +72,24 @@ const Login = () => {
       );
 
       // toast.success("Successfully signed in with Google!");
+      message.success("Successfully signed in with Google!");
       setTimeout(() => {
         navigate("/");
       }, 300);
     }
   }, [location.search, navigate]);
 
-
   const handleGoogleLogin = () => {
-    window.location.href = `http://localhost:5000/api/auth-user/google`; 
+    window.location.href = `http://localhost:5000/api/auth-user/google`;
   };
   console.log(window.location.href);
 
   return (
     <>
+      <Helmet>
+        <title>Airbnb | Login</title>
+        <meta name="description" content="login page" />
+      </Helmet>
       <div className={styles["login"]}>
         <div className={styles["login_content"]}>
           <form

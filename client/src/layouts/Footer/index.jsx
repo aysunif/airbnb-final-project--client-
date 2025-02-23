@@ -11,9 +11,9 @@ const Footer = () => {
       <div className={styles["footer_center"]}>
         <h3>Useful Links</h3>
         <ul>
-          <li>About Us</li>
-          <li>Help Center</li>
-          <li>AirCover</li>
+          <li><a href="/">About Us</a></li>
+          <li><a href="/">Help Center</a></li>
+          <li><a href="/">AirCover</a></li>
         </ul>
       </div>
 

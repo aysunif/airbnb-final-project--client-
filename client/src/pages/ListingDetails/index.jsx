@@ -8,10 +8,12 @@ import { DateRange } from "react-date-range";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Tag } from "antd";
+import { message, Tag } from "antd";
 import PaymentModal from "../../components/PaymentModal";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { Helmet } from "react-helmet-async";
+
 
 const stripePromise = loadStripe(
   "pk_test_51QvMDQGDdvSl6zjx1ubghH6NYjR7wFiiJ64VZSOIAHlMIWVUHYBGLH8ze5evlm8e3yBSSnZvgLLSK7JfIRWa3cgz00s9FLK1nC"
@@ -22,13 +24,18 @@ const ListingDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+  const user = useSelector((state) => state.user);
+  // console.log(user)
 
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
 
   const handleBooking = () => {
-    // Payment modalını göstərmək
-    setShowPaymentModal(true);
+    if (!user) {
+      navigate("/login");
+    } else {
+      setShowPaymentModal(true); 
+    }
   };
 
   const handleClosePaymentModal = () => {
@@ -63,10 +70,12 @@ const ListingDetails = () => {
       );
 
       if (response.status === 200) {
+        message.success("Booking successful!");
         navigate(`/${customerId}/trips`);
       }
     } catch (err) {
       console.log("Submit Booking Failed.", err.message);
+      message.success("Booking successful!");
     }
   };
 
@@ -82,12 +91,13 @@ const ListingDetails = () => {
       console.log("Fetch Listing Details Failed", err.message);
     }
   };
+  console.log(listing)
 
   useEffect(() => {
     getListingDetails();
   }, []);
 
-  console.log(listing);
+  // console.log(listing);
 
   /* BOOKING CALENDAR */
   const [dateRange, setDateRange] = useState([
@@ -118,6 +128,10 @@ const ListingDetails = () => {
     <Loader />
   ) : (
     <>
+     <Helmet>
+            <title>Airbnb | Details</title>
+            <meta name="description" content="details page" />
+          </Helmet>
       <div className={styles["listing-details"]}>
         <div className={styles["title"]}>
           <h1>{listing.title}</h1>
@@ -157,7 +171,7 @@ const ListingDetails = () => {
         <div className={styles["profile"]}>
           <img src={listing.creator?.profileImagePath} />
           <h3>
-            Hosted by {listing.creator?.firstName} {listing.creator?.lastName}
+          Hosted by {listing.creator?.firstName || "Unknown"} {listing.creator?.lastName || ""}
           </h3>
         </div>
         <hr />

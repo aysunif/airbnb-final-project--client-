@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { setListings } from "../redux/state";
 import axios from "axios";
+import { message } from "antd";
 
 const Listing = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,13 @@ const Listing = () => {
 
       dispatch(setListings({ listings: response.data }));
       setLoading(false);
+
+      message.success("Listings loaded successfully!");
     } catch (err) {
       console.log("Fetch Listings Failed", err);
+      setLoading(false);
+      
+      message.error("Failed to load listings. Please try again.");
     }
   };
 

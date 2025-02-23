@@ -5,6 +5,7 @@ import { Button, Input, Upload, message, Spin } from "antd";
 import { UserOutlined, CameraOutlined } from "@ant-design/icons";
 import { setLogin } from "../../redux/state";
 import styles from "../../assets/styles/profilePage.module.scss";
+import { Helmet } from "react-helmet-async";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -42,12 +43,15 @@ const ProfilePage = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
     for (let key in updatedData) {
+      console.log(key);
       if (updatedData[key]) {
         formData.append(key, updatedData[key]);
       }
     }
+    console.log(formData);
 
     try {
+      console.log(formData);
       const response = await axios.put(
         `http://localhost:5000/api/users/${userId}`,
         formData,
@@ -57,9 +61,11 @@ const ProfilePage = () => {
           },
         }
       );
+
       message.success("Profile updated successfully!");
       dispatch(setLogin({ user: response.data.user, token: userData.token }));
       setIsEditing(false);
+      console.log(response);
     } catch (err) {
       console.error("Error updating user", err.message);
       message.error("Failed to update profile");
@@ -71,78 +77,87 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.profileCard}>
-        {/* Profile Picture */}
-        <div className={styles.profileImageWrapper}>
-          <Upload
-            accept="image/*"
-            showUploadList={false}
-            onChange={handleFileChange}
-            beforeUpload={() => false}
-          >
-            <div className={styles.profileImage}>
-              <img
-                src={
-                  updatedData.profileImage
-                    ? URL.createObjectURL(updatedData.profileImage)
-                    : updatedData.profileImagePath
-                }
-                alt="Profile"
-              />
-              {isEditing && (
-                <div className={styles.uploadIcon}>
-                  <CameraOutlined />
-                </div>
-              )}
-            </div>
-          </Upload>
-        </div>
+    <>
+      <Helmet>
+        <title>Airbnb | Profile</title>
+        <meta name="description" content="profile page" />
+      </Helmet>
+      <div className={styles.profileContainer}>
+        <div className={styles.profileCard}>
+          {/* Profile Picture */}
+          <div className={styles.profileImageWrapper}>
+            <Upload
+              accept="image/*"
+              showUploadList={false}
+              onChange={handleFileChange}
+              beforeUpload={() => false}
+            >
+              <div className={styles.profileImage}>
+                <img
+                  src={
+                    updatedData.profileImage
+                      ? URL.createObjectURL(updatedData.profileImage)
+                      : updatedData.profileImagePath
+                  }
+                  alt="Profile"
+                />
+                {isEditing && (
+                  <div className={styles.uploadIcon}>
+                    <CameraOutlined />
+                  </div>
+                )}
+              </div>
+            </Upload>
+          </div>
 
-        {/* User Info */}
-        <div className={styles.userInfo}>
-          <div className={styles.inputGroup}>
+          {/* User Info */}
+          <div className={styles.userInfo}>
+            <div className={styles.inputGroup}>
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="First Name"
+                value={updatedData.firstName}
+                name="firstName"
+                onChange={handleChange}
+                disabled={!isEditing}
+              />
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Last Name"
+                value={updatedData.lastName}
+                name="lastName"
+                onChange={handleChange}
+                disabled={!isEditing}
+              />
+            </div>
             <Input
               prefix={<UserOutlined />}
-              placeholder="First Name"
-              value={updatedData.firstName}
-              name="firstName"
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            <Input
-              prefix={<UserOutlined />}
-              placeholder="Last Name"
-              value={updatedData.lastName}
-              name="lastName"
+              placeholder="Email"
+              value={updatedData.email}
+              name="email"
               onChange={handleChange}
               disabled={!isEditing}
             />
           </div>
-          <Input
-            prefix={<UserOutlined />}
-            placeholder="Email"
-            value={updatedData.email}
-            name="email"
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
-        </div>
 
-        {/* Buttons */}
-        <div className={styles.buttonContainer}>
-          {isEditing ? (
-            <Button onClick={handleSubmit} className={styles.saveButton}>
-              Save Changes
-            </Button>
-          ) : (
-            <Button onClick={() => setIsEditing(true)} className={styles["editButton"]}>
-              Edit Profile
-            </Button>
-          )}
+          {/* Buttons */}
+          <div className={styles.buttonContainer}>
+            {isEditing ? (
+              <Button onClick={handleSubmit} className={styles.saveButton}>
+                Save Changes
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setIsEditing(true)}
+                className={styles["editButton"]}
+              >
+                Edit Profile
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

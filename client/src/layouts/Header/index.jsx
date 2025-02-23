@@ -59,7 +59,7 @@ const Header = () => {
               Become a Host
             </a>
           )}
-          <LanguageRounded sx={{ color: variables.darkgrey }} />
+    
           <button
             className={styles["navbar_right_account"]}
             onClick={() => setDropdownMenu(!dropdownMenu)}

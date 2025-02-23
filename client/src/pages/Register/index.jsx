@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Helmet } from "react-helmet-async";
+import { message } from "antd";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -64,15 +66,21 @@ const Register = () => {
       console.log(response.data.user.profileImagePath);
 
       if (response.status === 200) {
+        message.success("Registration successful! You can now log in.");
         navigate("/login");
       }
     } catch (err) {
       console.log("Registration failed", err.response?.data || err.message);
+      message.error("Registration failed. Please try again.");
     }
   };
 
   return (
     <>
+     <Helmet>
+            <title>Airbnb | Register</title>
+            <meta name="description" content="register page" />
+          </Helmet>
       <div className={styles["register"]}>
         <div className={styles["register_content"]}>
           <form

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Loader from "../../components/Loader";
 import ListingCard from "../../components/ListingCard";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+import { message } from "antd";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(true);
@@ -22,8 +24,10 @@ const SearchPage = () => {
 
       dispatch(setListings({ listings: response.data }));
       setLoading(false);
+      message.success(`Found ${response.data.length} listings for "${search}"`);
     } catch (err) {
       console.log("Fetch Search List failed!", err.message);
+      message.error("Failed to fetch search results. Please try again later."); 
     }
   };
 
@@ -35,6 +39,10 @@ const SearchPage = () => {
     <Loader />
   ) : (
     <>
+      <Helmet>
+        <title>Airbnb | Search</title>
+        <meta name="description" content="search page" />
+      </Helmet>
       <h1 className={styles["title-list"]}>{search}</h1>
       <div className={styles["list"]}>
         {listings?.map(

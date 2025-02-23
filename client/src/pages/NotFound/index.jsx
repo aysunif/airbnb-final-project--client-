@@ -1,8 +1,14 @@
 import React from "react";
 import styles from "../../assets/styles/notFound.module.scss";
+import { Helmet } from "react-helmet-async";
 
 const NotFound = () => {
   return (
+    <>
+     <Helmet>
+            <title>Airbnb | NotFound</title>
+            <meta name="description" content="notfound page" />
+          </Helmet>
     <div className={styles.container}>
       <img src="/images/404error.gif" alt="" />
       <div className={styles.content}>
@@ -11,6 +17,7 @@ const NotFound = () => {
         <a href="/" className={styles.homeLink}>Go Back to Home</a>
       </div>
     </div>
+    </>
   );
 };
 

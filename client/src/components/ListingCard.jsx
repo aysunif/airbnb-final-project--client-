@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishList } from "../redux/state";
 import axios from "axios";
+import { message } from "antd";
 
 const ListingCard = ({
   listingId,
@@ -49,16 +50,24 @@ const ListingCard = ({
 
   const patchWishList = async () => {
     if (user?._id !== creator._id) {
-      const response = await axios.patch(
-        `http://localhost:5000/api/users/${user?._id}/${listingId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      dispatch(setWishList(response.data.wishList));
-    } else { return }
+      try {
+        const response = await axios.patch(
+          `http://localhost:5000/api/users/${user?._id}/${listingId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        dispatch(setWishList(response.data.wishList));
+        message.success("Item added to your wishlist!");
+      } catch (err) {
+        console.error("Error adding to wishlist", err.message);
+        message.error("Failed to add item to wishlist. Please try again.");
+      }
+    } else {
+      return;
+    }
   };
 
   return (

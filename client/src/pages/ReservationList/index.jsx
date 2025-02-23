@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ListingCard from "../../components/ListingCard";
 import { setReservationList } from "../../redux/state";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+import { message } from "antd"; 
 
 const ReservationList = () => {
   const [loading, setLoading] = useState(true);
@@ -21,8 +23,10 @@ const ReservationList = () => {
       const data = response.data;
       dispatch(setReservationList(data));
       setLoading(false);
+      message.success("Your reservations have been successfully loaded!");
     } catch (err) {
       console.log("Fetch Reservation List failed!", err.message);
+      message.error("Failed to fetch your reservations. Please try again.");
     }
   };
 
@@ -34,6 +38,10 @@ const ReservationList = () => {
     <Loader />
   ) : (
     <>
+      <Helmet>
+        <title>Airbnb | Reservation List</title>
+        <meta name="description" content="reservation page" />
+      </Helmet>
       <h1 className={styles["title-list"]}>Your Reservation List</h1>
       <div className={styles["list"]}>
         {reservationList?.map(

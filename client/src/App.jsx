@@ -16,6 +16,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import ProfilePage from "./pages/ProfilePage";
+import LoginSuccess from "./pages/LoginSuccess";
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminLogin />} />
-        {/* <Route path="/login/:token/:user" element={<Login />} /> */}
+        <Route path="/loginSuccess" element={<LoginSuccess />} />
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/create-listing" element={<CreateListing />} />
