@@ -9,13 +9,66 @@ import Loader from "../../components/Loader";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Tag } from "antd";
+import PaymentModal from "../../components/PaymentModal";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51QvMDQGDdvSl6zjx1ubghH6NYjR7wFiiJ64VZSOIAHlMIWVUHYBGLH8ze5evlm8e3yBSSnZvgLLSK7JfIRWa3cgz00s9FLK1nC"
+);
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
 
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
+
+  const handleBooking = () => {
+    // Payment modalını göstərmək
+    setShowPaymentModal(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setShowPaymentModal(false);
+  };
+
+  const customerId = useSelector((state) => state?.user?._id);
+
+  const navigate = useNavigate();
+  
+  /* SUBMIT BOOKING */
+
+  const handleSuccessPayment = async () => {
+    try {
+      const bookingForm = {
+        customerId,
+        listingId,
+        hostId: listing.creator?._id,
+        startDate: dateRange[0].startDate.toDateString(),
+        endDate: dateRange[0].endDate.toDateString(),
+        totalPrice: listing.price * dayCount,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/bookings/create",
+        bookingForm,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        navigate(`/${customerId}/trips`);
+      }
+    } catch (err) {
+      console.log("Submit Booking Failed.", err.message);
+    }
+  };
 
   const getListingDetails = async () => {
     try {
@@ -53,40 +106,6 @@ const ListingDetails = () => {
   const end = new Date(dateRange[0].endDate);
   const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
 
-  /* SUBMIT BOOKING */
-  const customerId = useSelector((state) => state?.user?._id);
-
-  const navigate = useNavigate();
-
-  const handleSubmit = async () => {
-    try {
-      const bookingForm = {
-        customerId,
-        listingId,
-        hostId: listing.creator?._id,
-        startDate: dateRange[0].startDate.toDateString(),
-        endDate: dateRange[0].endDate.toDateString(),
-        totalPrice: listing.price * dayCount,
-      };
-
-      const response = await axios.post(
-        "http://localhost:5000/api/bookings/create-payment",
-        bookingForm,
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // }
-      );
-
-      if (response.data.url) {
-        window.location.href = response.data.url;
-      }
-    } catch (err) {
-      console.log("Payment Failed:", err.message);
-    }
-  };
-
   const handleImageClick = (image) => {
     setSelectedImage(image);
   };
@@ -106,7 +125,8 @@ const ListingDetails = () => {
             <Tag color={listing.isApproved ? "green" : "red"}>
               {listing.isApproved ? "Active" : "Pending"}
             </Tag>
-          </h1>        </div>
+          </h1>{" "}
+        </div>
         <div className={styles["photos"]}>
           {listing.listingPhotoPaths?.map((item, index) => (
             <img
@@ -184,13 +204,16 @@ const ListingDetails = () => {
               <p>Start Date: {dateRange[0].startDate.toDateString()}</p>
               <p>End Date: {dateRange[0].endDate.toDateString()}</p>
 
-              <button
-                className={styles["button"]}
-                type="submit"
-                onClick={handleSubmit}
-              >
-                BOOKING
-              </button>
+              <button className={styles["button"]} onClick={handleBooking}>Book Now</button>
+              {showPaymentModal && (
+                <Elements stripe={stripePromise}>
+                  <PaymentModal
+                    totalPrice={listing.price * dayCount}
+                    onClose={handleClosePaymentModal}
+                    onSuccess={handleSuccessPayment}
+                  />
+                </Elements>
+              )}
             </div>
           </div>
         </div>
