@@ -16,7 +16,7 @@ const PaymentModal = ({ totalPrice, onClose, onSuccess }) => {
 
     try {
       // Backend-dən payment intent almaq
-      const { data } = await axios.post("http://localhost:5000/api/stripe/create-payment-intent", { totalPrice });
+      const { data } = await axios.post("https://airbnb-final-project-server.onrender.com/api/stripe/create-payment-intent", { totalPrice });
 
       // Stripe ilə ödəniş
       const { clientSecret } = data;

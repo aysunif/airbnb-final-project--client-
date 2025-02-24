@@ -17,7 +17,7 @@ const PropertyList = () => {
   const getPropertyList = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/users/${user._id}/properties`
+        `https://airbnb-final-project-server.onrender.com/api/users/${user._id}/properties`
       );
 
       console.log(response.data);

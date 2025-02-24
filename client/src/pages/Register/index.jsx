@@ -54,7 +54,7 @@ const Register = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://airbnb-final-project-server.onrender.com/api/auth/register",
         register_form,
         {
           headers: {

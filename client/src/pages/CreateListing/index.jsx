@@ -133,7 +133,7 @@ const CreateListing = () => {
 
       /* Send a POST request to server */
       const response = await axios.post(
-        "http://localhost:5000/api/listings/create",
+        "https://airbnb-final-project-server.onrender.com/api/listings/create",
         listingForm,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

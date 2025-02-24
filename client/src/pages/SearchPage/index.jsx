@@ -19,7 +19,7 @@ const SearchPage = () => {
   const getSearchListings = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/listings/search/${search}`
+        `https://airbnb-final-project-server.onrender.com/api/listings/search/${search}`
       );
 
       dispatch(setListings({ listings: response.data }));

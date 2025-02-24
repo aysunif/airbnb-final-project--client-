@@ -18,7 +18,7 @@ const ReservationList = () => {
   const getReservationList = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/reservations`
+        `https://airbnb-final-project-server.onrender.com/api/users/${userId}/reservations`
       );
       const data = response.data;
       dispatch(setReservationList(data));

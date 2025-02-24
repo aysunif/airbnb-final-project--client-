@@ -17,8 +17,8 @@ const Listing = () => {
     try {
       const url =
         selectedCategory !== "All"
-          ? `http://localhost:5000/api/listings?category=${selectedCategory}`
-          : "http://localhost:5000/api/listings/active";
+          ? `https://airbnb-final-project-server.onrender.com/api/listings?category=${selectedCategory}`
+          : "https://airbnb-final-project-server.onrender.com/api/listings/active";
 
       const response = await axios.get(url);
 
@@ -29,7 +29,7 @@ const Listing = () => {
     } catch (err) {
       console.log("Fetch Listings Failed", err);
       setLoading(false);
-      
+
       message.error("Failed to load listings. Please try again.");
     }
   };

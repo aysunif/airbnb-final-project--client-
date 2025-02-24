@@ -60,7 +60,7 @@ const ListingDetails = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/bookings/create",
+        "https://airbnb-final-project-server.onrender.com/api/bookings/create",
         bookingForm,
         {
           headers: {
@@ -82,7 +82,7 @@ const ListingDetails = () => {
   const getListingDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/listings/${listingId}`
+        `https://airbnb-final-project-server.onrender.com/api/listings/${listingId}`
       );
 
       setListing(response.data);

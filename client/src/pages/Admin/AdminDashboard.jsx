@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "../../assets/styles/AdminDashboard.module.scss";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 const { TabPane } = Tabs;
 const { useBreakpoint } = Grid;
 
