@@ -59,7 +59,7 @@ const ProfilePage = () => {
     try {
       // console.log(formData);
       const response = await axios.put(
-        `http://localhost:5000/api/users/${userId}`,
+        `https://airbnb-final-project-server.onrender.com/api/users/${userId}`,
         formData
       );
 

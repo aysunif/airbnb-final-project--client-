@@ -19,7 +19,7 @@ const TripList = () => {
   const getTripList = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/trips`
+        `https://airbnb-final-project-server.onrender.com/api/users/${userId}/trips`
       );
       console.log(response);
       dispatch(setTripList(response.data));
