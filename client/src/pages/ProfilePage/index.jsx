@@ -33,7 +33,7 @@ const ProfilePage = () => {
   };
 
   const handleFileChange = (info) => {
-    const file = info.file.originFileObj;
+    const file = info.fileList.at(-1).originFileObj;
     setUpdatedData((prevData) => ({
       ...prevData,
       profileImage: file,
