@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { HelmetProvider } from 'react-helmet-async';
+import "@fontsource/roboto";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
