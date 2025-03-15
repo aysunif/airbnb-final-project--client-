@@ -32,7 +32,7 @@ const TripList = () => {
   const handleRate = async (listingId, rating) => {
     try {
       await axios.post(
-        `https://airbnb-final-project-server.onrender.com/api//listings/rate`,
+        `https://airbnb-final-project-server.onrender.com/api/listings/rate`,
         { listingId, userId, rating }
       );
       message.success("Rating submitted successfully!");
