@@ -1,13 +1,20 @@
 import React from "react";
 import { TbBeach, TbMountain, TbPool } from "react-icons/tb";
 import {
+  GiAncientColumns,
   GiBarn,
   GiBoatFishing,
   GiCactus,
   GiCastle,
   GiCaveEntrance,
+  GiFarmer,
   GiForestCamp,
+  GiGrapes,
   GiIsland,
+  GiPalmTree,
+  GiSailboat,
+  GiSolarPower,
+  GiTreehouse,
   GiWindmill,
 } from "react-icons/gi";
 import {
@@ -129,6 +136,41 @@ export const categories = [
     label: "Barns",
     icon: <GiBarn />,
     description: "This property is in a barn!",
+  },
+  {
+    label: "Treehouses",
+    icon: <GiTreehouse />,
+    description: "This property is a treehouse!",
+  },
+  {
+    label: "Farms",
+    icon: <GiFarmer />,
+    description: "This property is located on a farm!",
+  },
+  {
+    label: "Vineyards",
+    icon: <GiGrapes />,
+    description: "This property is surrounded by vineyards!",
+  },
+  {
+    label: "Tropical",
+    icon: <GiPalmTree />,
+    description: "This property is in a tropical paradise!",
+  },
+  {
+    label: "Boats",
+    icon: <GiSailboat />,
+    description: "This property is a houseboat or yacht!",
+  },
+  {
+    label: "Historical Homes",
+    icon: <GiAncientColumns />,
+    description: "This property has historical significance!",
+  },
+  {
+    label: "Eco-Friendly",
+    icon: <GiSolarPower />,
+    description: "This property is environmentally friendly!",
   },
 ];
 

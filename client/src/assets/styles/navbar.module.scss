@@ -2,7 +2,7 @@
 @import "./breakpoints.module.scss";
 
 .navbar {
-  padding: 5px 60px;
+  padding: 0 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +10,7 @@
   top: 0;
   z-index: 1000; 
   background-color: white;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1);
 
   @include sm {
     padding: 10px 20px;
@@ -19,6 +19,9 @@
   img {
     width: 130px;
     cursor: pointer;
+    @include sm {
+    width: 123px;
+    }
   }
 
   &_search {
@@ -29,20 +32,45 @@
     display: flex;
     gap: 80px;
     align-items: center;
+    transition: all 0.5s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+  
     input {
       border: none;
       outline: none;
+      width: 200px; 
+      transition: width 0.5s ease-in-out;
     }
-
+  
     &:hover {
       @include shadow;
     }
-
-    @include lg {
-      display: none;
+  
+    @include md {
+      gap: 5px;
+      padding: 0px 8px;
+      height: 43px;
+      
+      input {
+        width: 85px; 
+        font-size: 13px; 
+      }
+    }
+  
+    @include sm {
+      gap: 7px;
+      padding: 0px 8px;
+      margin-right: 12px;
+      height: 40px;
+      
+      input {
+        width: 70px;
+        font-size: 12px;
+      }
     }
   }
+  
 
   &_right {
     display: flex;
@@ -52,14 +80,15 @@
     .host {
       text-decoration: none;
       color: $blue;
-      font-weight: 700;
+      font-weight: 500;
+      margin-left: 15px;
       cursor: pointer;
 
       &:hover {
         color: $pinkred;
       }
 
-      @include sm {
+      @include mm {
         display: none;
       }
     }
@@ -74,10 +103,25 @@
       display: flex;
       gap: 10px;
       background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
       cursor: pointer;
 
       &:hover {
         @include shadow;
+      }
+      @include md {
+        height: 45px;
+        padding: 0 5px;
+        gap: 5px;
+  
+        }
+
+      @include sm {
+      height: 43px;
+      padding: 0 5px;
+      gap: 5px;
+
       }
 
       img {
@@ -101,7 +145,7 @@
       z-index: 9999;
 
       @include sm {
-        right: 20px;
+        right: 80px;
       }
 
       a {

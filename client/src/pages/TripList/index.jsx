@@ -12,7 +12,6 @@ const TripList = () => {
   const [loading, setLoading] = useState(true);
   const userId = useSelector((state) => state.user._id);
   const tripList = useSelector((state) => state.user.tripList);
-  console.log(userId, tripList);
 
   const dispatch = useDispatch();
 
@@ -21,7 +20,6 @@ const TripList = () => {
       const response = await axios.get(
         `https://airbnb-final-project-server.onrender.com/api/users/${userId}/trips`
       );
-      console.log(response);
       dispatch(setTripList(response.data));
       setLoading(false);
       message.success("Trip list loaded successfully!"); 

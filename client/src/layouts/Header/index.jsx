@@ -3,7 +3,6 @@ import {
   Search,
   AccountCircle,
   Menu,
-  LanguageRounded,
 } from "@mui/icons-material";
 import variables from "../../assets/styles/variables.module.scss";
 import { useState } from "react";
@@ -17,7 +16,6 @@ const Header = () => {
   const [dropdownMenu, setDropdownMenu] = useState(false);
 
   const user = useSelector((state) => state.user);
-  console.log(user)
 
   const dispatch = useDispatch();
 
@@ -51,11 +49,11 @@ const Header = () => {
 
         <div className={styles["navbar_right"]}>
           {user ? (
-            <a href="/create-listing" className="host">
+            <a href="/create-listing" className={styles["host"]}>
               Become a Host
             </a>
           ) : (
-            <a href="/login" className="host">
+            <a href="/login" className={styles["host"]}>
               Become a Host
             </a>
           )}

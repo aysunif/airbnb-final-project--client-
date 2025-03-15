@@ -25,7 +25,6 @@ const ListingDetails = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const user = useSelector((state) => state.user);
-  // console.log(user)
 
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
@@ -91,13 +90,11 @@ const ListingDetails = () => {
       console.log("Fetch Listing Details Failed", err.message);
     }
   };
-  console.log(listing)
 
   useEffect(() => {
     getListingDetails();
   }, []);
 
-  // console.log(listing);
 
   /* BOOKING CALENDAR */
   const [dateRange, setDateRange] = useState([

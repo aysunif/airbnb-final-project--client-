@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { saveUserToStorage } from "../../utils/localStorage";
 import { Helmet } from "react-helmet-async";
 import { message } from "antd";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,6 @@ const Login = () => {
         "https://airbnb-final-project-server.onrender.com/api/auth/login",
         { email, password }
       );
-      console.log(response);
 
       if (response.data) {
         dispatch(
@@ -41,17 +41,14 @@ const Login = () => {
             token: response.data.token,
           })
         );
-        // navigate("/");
         saveUserToStorage(response.data.token);
         Cookies.set("token", response.data.token);
-        // toast.success("Giriş uğurlu oldu!");
         message.success("Login successful!");
         navigate("/");
       }
     } catch (err) {
       console.log("Login failed", err.message);
       message.error("Login failed! Please check your credentials and try again.");
-      // toast.error("Giriş zamanı xəta baş verdi!");
     }
   };
 
@@ -71,7 +68,6 @@ const Login = () => {
         })
       );
 
-      // toast.success("Successfully signed in with Google!");
       message.success("Successfully signed in with Google!");
       setTimeout(() => {
         navigate("/");
@@ -82,7 +78,6 @@ const Login = () => {
   const handleGoogleLogin = () => {
     window.location.href = `https://airbnb-final-project-server.onrender.com/api/auth-user/google`;
   };
-  console.log(window.location.href);
 
   return (
     <>
@@ -111,11 +106,11 @@ const Login = () => {
               required
             />
             <button type="submit">LOG IN</button>
-            <button onClick={handleGoogleLogin} type="button" class="google-login-button">
-              {/* <GoogleIcon /> */}
-              <span>Login</span>
-              <span>With</span>
-              <span>Google</span>
+            <button onClick={handleGoogleLogin} type="button" class={styles["google-login-button"]}>
+            <FcGoogle className={styles["google-icon"]}/>
+              <span className={styles["first"]}>Login</span>
+              <span className={styles["second"]}>With</span>
+              <span className={styles["third"]}>Google</span>
             </button>
           </form>
           <a href="/register">Don't have an account? Sign In Here</a>

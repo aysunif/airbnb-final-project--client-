@@ -27,7 +27,6 @@ const Footer = () => {
           <Email />
           <p>airbnb@support.com</p>
         </div>
-        {/* <img src="" alt="payment" /> */}
       </div>
     </div>
     </>
