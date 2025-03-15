@@ -3,11 +3,11 @@ import styles from "../../assets/styles/lists.module.scss";
 import { setListings } from "../../redux/state";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import Loader from "../../components/Loader";
 import ListingCard from "../../components/ListingCard";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { message } from "antd";
+import { Box, Grid, Skeleton } from "@mui/material";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(true);
@@ -35,8 +35,23 @@ const SearchPage = () => {
     getSearchListings();
   }, [search]);
 
-  return loading ? (
-    <Loader />
+  return loading ?  (
+    <Grid container spacing={2} justifyContent="center" sx={{ padding: '0 70px' }}>
+      {[...Array(8)].map((_, index) => (
+        <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+          <Box sx={{
+              p: 1,
+              borderRadius: 2, 
+            }}>
+            <Skeleton variant="rectangular" width="100%" height={250} />
+            <Skeleton variant="text" width="90%" />
+            <Skeleton variant="text" width="60%" />
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="text" width="40%" />
+          </Box>
+        </Grid>
+      ))}
+    </Grid>
   ) : (
     <>
       <Helmet>
