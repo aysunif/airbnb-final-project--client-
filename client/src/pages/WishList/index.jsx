@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { Box, Grid, Skeleton } from "@mui/material";
 
 const WishList = () => {
+    const [loading, setLoading] = useState(true);
   const wishList = useSelector((state) => state.user.wishList);
 
   return loading ? (
