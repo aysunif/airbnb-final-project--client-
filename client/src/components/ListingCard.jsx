@@ -10,9 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishList } from "../redux/state";
 import axios from "axios";
-import { message } from "antd";
+import { message, Rate } from "antd";
 import { IconButton } from "@mui/material";
-
 
 const ListingCard = ({
   listingId,
@@ -32,6 +31,11 @@ const ListingCard = ({
   onDelete,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const listings = useSelector((state) => state.listings);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const wishList = user?.wishList || [];
 
   const goToPrevSlide = () => {
     setCurrentIndex(
@@ -44,11 +48,8 @@ const ListingCard = ({
     setCurrentIndex((prevIndex) => (prevIndex + 1) % listingPhotoPaths.length);
   };
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.user);
-  const wishList = user?.wishList || [];
+  const listing = listings.find((listing) => listing._id === listingId);
+  const averageRating = listing?.averageRating || 0;
 
   const isLiked = wishList?.find((item) => item?._id === listingId);
 
@@ -63,7 +64,6 @@ const ListingCard = ({
             },
           }
         );
-        console.log(response);
         dispatch(setWishList(response.data.wishList));
         message.success("Item added or deleted to your wishlist!");
       } catch (err) {
@@ -113,28 +113,42 @@ const ListingCard = ({
           </div>
         </div>
 
-        <h3>
-          {city}, {province}, {country}
-        </h3>
-        <p>{category}</p>
 
-        {!booking ? (
-          <>
-            <p>{type}</p>
-            <p className={styles["price"]}>
-              <span>${price}</span> night
-            </p>
-          </>
-        ) : (
-          <>
-            <p>
-              {startDate} - {endDate}
-            </p>
-            <p>
-              <span>${totalPrice}</span> total
-            </p>
-          </>
-        )}
+        <div className={styles["listing-info"]}>
+          <div className={styles["info"]}>
+            <h3>
+              {city}, {province}, {country}
+            </h3>
+            <p>{category}</p>
+
+            {!booking ? (
+              <>
+                <p>{type}</p>
+                <p className={styles["price"]}>
+                  <span>${price}</span> night
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  {startDate} - {endDate}
+                </p>
+                <p>
+                  <span>${totalPrice}</span> total
+                </p>
+              </>
+            )}
+          </div>
+          <div>
+            <div style={{ textAlign: "center" }}>
+              <Rate disabled defaultValue={1} count={1} />
+              <span>{averageRating.toFixed(1)}</span>
+            </div>
+
+          </div>
+        </div>
+
+
 
         <button
           className={styles["favorite"]}
@@ -163,7 +177,7 @@ const ListingCard = ({
               left: "10px",
               color: "red",
               "&:hover": {
-                backgroundColor: "rgba(255, 0, 0, 0.1)", 
+                backgroundColor: "rgba(255, 0, 0, 0.1)",
               },
             }}
           >

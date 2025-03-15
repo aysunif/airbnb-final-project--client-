@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ListingCard from "../../components/ListingCard";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
-import { message } from "antd";
+import { Rate, message } from "antd";
 import { Box, Grid, Skeleton } from "@mui/material";
 
 const TripList = () => {
@@ -22,10 +22,23 @@ const TripList = () => {
       );
       dispatch(setTripList(response.data));
       setLoading(false);
-      message.success("Trip list loaded successfully!"); 
+      message.success("Trip list loaded successfully!");
     } catch (err) {
       console.log("Get Trip List failed!", err.message);
       message.error("Failed to load your trip list. Please try again later.");
+    }
+  };
+
+  const handleRate = async (listingId, rating) => {
+    try {
+      await axios.post(
+        `https://airbnb-final-project-server.onrender.com/api//listings/rate`,
+        { listingId, userId, rating }
+      );
+      message.success("Rating submitted successfully!");
+    } catch (err) {
+      console.log("Rating submission failed!", err.message);
+      message.error("Failed to submit rating. Please try again later.");
     }
   };
 
@@ -38,9 +51,9 @@ const TripList = () => {
       {[...Array(8)].map((_, index) => (
         <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
           <Box sx={{
-              p: 1,
-              borderRadius: 2, 
-            }}>
+            p: 1,
+            borderRadius: 2,
+          }}>
             <Skeleton variant="rectangular" width="100%" height={250} />
             <Skeleton variant="text" width="90%" />
             <Skeleton variant="text" width="60%" />
@@ -73,20 +86,28 @@ const TripList = () => {
             totalPrice,
             booking = true,
           }) => (
-            <ListingCard
-            key={listingId._id}
-              listingId={listingId._id}
-              creator={hostId?._id}
-              listingPhotoPaths={listingId.listingPhotoPaths}
-              city={listingId.city}
-              province={listingId.province}
-              country={listingId.country}
-              category={listingId.category}
-              startDate={startDate}
-              endDate={endDate}
-              totalPrice={totalPrice}
-              booking={booking}
-            />
+            <div key={listingId._id}>
+              <ListingCard
+                listingId={listingId._id}
+                creator={hostId?._id}
+                listingPhotoPaths={listingId.listingPhotoPaths}
+                city={listingId.city}
+                province={listingId.province}
+                country={listingId.country}
+                category={listingId.category}
+                startDate={startDate}
+                endDate={endDate}
+                totalPrice={totalPrice}
+                booking={booking}
+                averageRating={listingId.averageRating}
+              />
+              <div style={{ marginTop: "10px", textAlign: "center" }}>
+                <Rate
+                  defaultValue={listingId.averageRating}
+                  onChange={(value) => handleRate(listingId._id, value)}
+                />
+              </div>
+            </div>
           )
         )}
       </div>
