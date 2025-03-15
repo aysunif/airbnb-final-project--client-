@@ -71,7 +71,8 @@
     font-size: 14px;
     color: rgb(111, 111, 111);
   }
-  .price{
+
+  .price {
     font-size: 15px;
     color: rgb(49, 49, 49);
   }
@@ -91,5 +92,14 @@
     cursor: pointer;
     z-index: 998;
     background: none;
+  }
+
+  .listing-info {
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .info{
+    width: 100%;
   }
 }
