@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import ListingCard from "../../components/ListingCard";
 import { Helmet } from "react-helmet-async";
 import { Box, Grid, Skeleton } from "@mui/material";
+import { useState } from "react";
 
 const WishList = () => {
     const [loading, setLoading] = useState(true);
