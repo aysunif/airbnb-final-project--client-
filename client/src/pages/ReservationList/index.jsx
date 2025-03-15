@@ -65,6 +65,12 @@ const ReservationList = () => {
         <meta name="description" content="reservation page" />
       </Helmet>
       <h1 className={styles["title-list"]}>Your Reservation List</h1>
+            {reservationList.length === 0 ? (
+            <div className={styles["empty-message"]}>
+              <img src="/images/empty.gif" alt="" />
+              <p>There is nothing here :(</p>
+            </div>
+          ) : (
       <div className={styles["list"]}>
         {reservationList?.map(
           ({
@@ -91,6 +97,7 @@ const ReservationList = () => {
           )
         )}
       </div>
+          )}
     </>
   );
 };
