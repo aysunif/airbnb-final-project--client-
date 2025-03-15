@@ -57,6 +57,12 @@ const TripList = () => {
         <meta name="description" content="triplist page" />
       </Helmet>
       <h1 className={styles["title-list"]}>Your Trip List</h1>
+      {tripList.length === 0 ? (
+      <div className={styles["empty-message"]}>
+        <img src="/images/empty.gif" alt="" />
+        <p>There is nothing here :(</p>
+      </div>
+    ) : (
       <div className={styles["list"]}>
         {tripList?.map(
           ({
@@ -68,6 +74,7 @@ const TripList = () => {
             booking = true,
           }) => (
             <ListingCard
+            key={listingId._id}
               listingId={listingId._id}
               creator={hostId?._id}
               listingPhotoPaths={listingId.listingPhotoPaths}
@@ -83,6 +90,7 @@ const TripList = () => {
           )
         )}
       </div>
+    )}
     </>
   );
 };

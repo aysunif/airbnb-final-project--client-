@@ -84,6 +84,12 @@ const PropertyList = () => {
         <meta name="description" content="property page" />
       </Helmet>
       <h1 className={styles["title-list"]}>Your Property List</h1>
+            {propertyList.length === 0 ? (
+            <div className={styles["empty-message"]}>
+              <img src="/images/empty.gif" alt="" />
+              <p>There is nothing here :(</p>
+            </div>
+          ) : (
       <div className={styles["list"]}>
         {propertyList?.map(
           ({
@@ -116,6 +122,7 @@ const PropertyList = () => {
           )
         )}
       </div>
+          )}
     </>
   );
 };

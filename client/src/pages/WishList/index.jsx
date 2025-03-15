@@ -39,6 +39,12 @@ const WishList = () => {
         <meta name="description" content="wish page" />
       </Helmet>
       <h1 className={styles["title-list"]}>Your Wish List</h1>
+            {wishList.length === 0 ? (
+            <div className={styles["empty-message"]}>
+              <img src="/images/empty.gif" alt="" />
+              <p>There is nothing here :(</p>
+            </div>
+          ) : (
       <div className={styles["list"]}>
         {wishList?.map(
           ({
@@ -69,6 +75,7 @@ const WishList = () => {
           )
         )}
       </div>
+          )}
     </>
   );
 };
