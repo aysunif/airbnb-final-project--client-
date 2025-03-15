@@ -26,9 +26,9 @@ const Header = () => {
   return (
     <>
       <div className={styles["navbar"]}>
-        <a href="/">
+        <Link to="/">
           <img src="/images/airbnb-logo.png" alt="logo" />
-        </a>
+        </Link>
 
         <div className={styles["navbar_search"]}>
           <input
@@ -49,15 +49,15 @@ const Header = () => {
 
         <div className={styles["navbar_right"]}>
           {user ? (
-            <a href="/create-listing" className={styles["host"]}>
+            <Link to="/create-listing" className={styles["host"]}>
               Become a Host
-            </a>
+            </Link>
           ) : (
-            <a href="/login" className={styles["host"]}>
+            <Link to="/login" className={styles["host"]}>
               Become a Host
-            </a>
+            </Link>
           )}
-    
+
           <button
             className={styles["navbar_right_account"]}
             onClick={() => setDropdownMenu(!dropdownMenu)}

@@ -4,12 +4,15 @@ import {
   ArrowForwardIos,
   ArrowBackIosNew,
   Favorite,
+  Delete,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishList } from "../redux/state";
 import axios from "axios";
 import { message } from "antd";
+import { IconButton } from "@mui/material";
+
 
 const ListingCard = ({
   listingId,
@@ -25,6 +28,8 @@ const ListingCard = ({
   endDate,
   totalPrice,
   booking,
+  showDeleteButton = false,
+  onDelete,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -42,7 +47,6 @@ const ListingCard = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  /* ADD TO WISHLIST */
   const user = useSelector((state) => state.user);
   const wishList = user?.wishList || [];
 
@@ -51,7 +55,7 @@ const ListingCard = ({
   const patchWishList = async () => {
     if (user?._id !== creator._id) {
       try {
-        const response = await axios.patch(
+        const response = await axios.put(
           `https://airbnb-final-project-server.onrender.com/api/users/${user?._id}/${listingId}`,
           {
             headers: {
@@ -59,10 +63,10 @@ const ListingCard = ({
             },
           }
         );
+        console.log(response);
         dispatch(setWishList(response.data.wishList));
-        message.success("Item added to your wishlist!");
+        message.success("Item added or deleted to your wishlist!");
       } catch (err) {
-        console.error("Error adding to wishlist", err.message);
         message.error("Failed to add item to wishlist. Please try again.");
       }
     } else {
@@ -146,6 +150,26 @@ const ListingCard = ({
             <Favorite sx={{ color: "white" }} />
           )}
         </button>
+
+        {showDeleteButton && (
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(listingId);
+            }}
+            sx={{
+              position: "absolute",
+              top: "10px",
+              left: "10px",
+              color: "red",
+              "&:hover": {
+                backgroundColor: "rgba(255, 0, 0, 0.1)", 
+              },
+            }}
+          >
+            <Delete />
+          </IconButton>
+        )}
       </div>
     </>
   );

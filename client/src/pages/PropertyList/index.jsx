@@ -6,6 +6,7 @@ import { setPropertyList } from "../../redux/state";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { Box, Grid, Skeleton } from "@mui/material";
+import { Modal, message } from "antd";
 
 const PropertyList = () => {
   const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ const PropertyList = () => {
   const propertyList = user?.propertyList;
 
   const dispatch = useDispatch();
+
   const getPropertyList = async () => {
     try {
       const response = await axios.get(
@@ -26,6 +28,34 @@ const PropertyList = () => {
     }
   };
 
+
+  const handleDeleteProperty = async (listingId) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this property?",
+      content: "This action cannot be undone.",
+      okText: "Yes, delete it",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          const resp = await axios.delete(
+            `https://airbnb-final-project-server.onrender.com/api/listings/${listingId}`
+          );
+          message.success("Property deleted successfully!");
+          console.log(resp);
+          getPropertyList();
+        } catch (err) {
+          console.log("Delete property failed", err.message);
+          message.error("Failed to delete property. Please try again.");
+        }
+      },
+      onCancel: () => {
+        message.success("Deletion cancelled!");
+        console.log("Deletion cancelled");
+      },
+    });
+  };
+
   useEffect(() => {
     getPropertyList();
   }, []);
@@ -35,9 +65,9 @@ const PropertyList = () => {
       {[...Array(8)].map((_, index) => (
         <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
           <Box sx={{
-              p: 1,
-              borderRadius: 2, 
-            }}>
+            p: 1,
+            borderRadius: 2,
+          }}>
             <Skeleton variant="rectangular" width="100%" height={250} />
             <Skeleton variant="text" width="90%" />
             <Skeleton variant="text" width="60%" />
@@ -69,6 +99,7 @@ const PropertyList = () => {
             booking = false,
           }) => (
             <ListingCard
+              key={_id}
               listingId={_id}
               creator={creator}
               listingPhotoPaths={listingPhotoPaths}
@@ -79,6 +110,8 @@ const PropertyList = () => {
               type={type}
               price={price}
               booking={booking}
+              showDeleteButton={true}
+              onDelete={handleDeleteProperty}
             />
           )
         )}
