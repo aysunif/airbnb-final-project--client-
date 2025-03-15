@@ -52,7 +52,7 @@ const ListingCard = ({
     if (user?._id !== creator._id) {
       try {
         const response = await axios.patch(
-          `https://airbnb-final-project-server.onrender.com/api/users/${user?._id}/${listingId}`,
+          `http://airbnb-final-project-server.onrender.com/api/users/${user?._id}/${listingId}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const ListingCard = ({
         {!booking ? (
           <>
             <p>{type}</p>
-            <p>
+            <p className={styles["price"]}>
               <span>${price}</span> night
             </p>
           </>

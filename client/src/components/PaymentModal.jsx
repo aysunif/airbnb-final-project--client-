@@ -10,15 +10,13 @@ const PaymentModal = ({ totalPrice, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
-    if (!stripe || !elements) return; // Stripe və Elements hazır olmalıdır
+    if (!stripe || !elements) return; 
 
     setLoading(true);
 
     try {
-      // Backend-dən payment intent almaq
       const { data } = await axios.post("https://airbnb-final-project-server.onrender.com/api/stripe/create-payment-intent", { totalPrice });
 
-      // Stripe ilə ödəniş
       const { clientSecret } = data;
       const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {

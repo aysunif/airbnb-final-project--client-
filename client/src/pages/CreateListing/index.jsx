@@ -33,7 +33,6 @@ const CreateListing = () => {
       [name]: value,
     });
   };
-  //   console.log(formLocation)
 
   /* BASIC COUNTS */
   const [guestCount, setGuestCount] = useState(1);
@@ -53,7 +52,6 @@ const CreateListing = () => {
       setAmenities((prev) => [...prev, facility]);
     }
   };
-  // console.log(amenities)
 
   // draggable photo
   const [photos, setPhotos] = useState([]);
@@ -95,7 +93,6 @@ const CreateListing = () => {
       [name]: value,
     });
   };
-  // console.log(formDescription)
   const creatorId = useSelector((state) => state.user._id);
 
   const navigate = useNavigate();
@@ -104,7 +101,6 @@ const CreateListing = () => {
     e.preventDefault();
 
     try {
-      /* Create a new FormData onject to handle file uploads */
       const listingForm = new FormData();
       listingForm.append("creator", creatorId);
       listingForm.append("category", category);
@@ -126,14 +122,12 @@ const CreateListing = () => {
       listingForm.append("price", formDescription.price);
       console.log(listingForm);
 
-      /* Append each selected photos to the FormData object */
       photos.forEach((photo) => {
         listingForm.append("listingPhotos", photo);
       });
 
-      /* Send a POST request to server */
       const response = await axios.post(
-        "https://airbnb-final-project-server.onrender.com/api/listings/create",
+        "http://airbnb-final-project-server.onrender.com/api/listings/create",
         listingForm,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

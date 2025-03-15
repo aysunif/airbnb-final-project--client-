@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>

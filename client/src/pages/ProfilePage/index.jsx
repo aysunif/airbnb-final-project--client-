@@ -43,8 +43,6 @@ const ProfilePage = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
     for (let key in updatedData) {
-      // console.log("Appending:", key, updatedData[key])
-      // console.log(key);
       if (updatedData[key]) {
         formData.append(key, updatedData[key]);
       }
@@ -52,12 +50,8 @@ const ProfilePage = () => {
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
-    // formData.append("test", "test")
-    // console.log(formData.entries());
-
 
     try {
-      // console.log(formData);
       const response = await axios.put(
         `https://airbnb-final-project-server.onrender.com/api/users/${userId}`,
         formData
@@ -66,7 +60,6 @@ const ProfilePage = () => {
       message.success("Profile updated successfully!");
       dispatch(setLogin({ user: response.data.user, token: userData.token }));
       setIsEditing(false);
-      console.log(response);
     } catch (err) {
       console.error("Error updating user", err.message);
       message.error("Failed to update profile");
@@ -85,7 +78,6 @@ const ProfilePage = () => {
       </Helmet>
       <div className={styles.profileContainer}>
         <div className={styles.profileCard}>
-          {/* Profile Picture */}
           <div className={styles.profileImageWrapper}>
             <Upload
               accept="image/*"
@@ -111,7 +103,6 @@ const ProfilePage = () => {
             </Upload>
           </div>
 
-          {/* User Info */}
           <div className={styles.userInfo}>
             <div className={styles.inputGroup}>
               <Input
@@ -141,7 +132,6 @@ const ProfilePage = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className={styles.buttonContainer}>
             {isEditing ? (
               <Button onClick={handleSubmit} className={styles.saveButton}>

@@ -9,14 +9,11 @@ import { Helmet } from 'react-helmet-async'
 const LoginSuccess = () => {
    let location = useLocation()
    const queryParams = new URLSearchParams(location.search)
-//    console.log(queryParams)
    const token = queryParams.get("token")
    const user = JSON.parse(queryParams.get("user"))
-  //  console.log(token)
   Cookies.set("token", token, { expires: 7, path: "/" });
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  console.log(user)
 
   useEffect(() => {
     if (token) {
@@ -31,9 +28,7 @@ const LoginSuccess = () => {
               token: token,
             })
           );
-          // navigate("/");
           saveUserToStorage(token);
-          // toast.success("Giriş uğurlu oldu!");
           navigate("/");
         }
   return (

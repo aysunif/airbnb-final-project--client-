@@ -1,41 +1,33 @@
-/* Full-page background styling */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #fff;  /* White background like Airbnb's primary theme */
+    background-color: #fff; 
     font-family: 'Poppins', sans-serif;
   }
   
-  /* Content area styling */
   .content {
     text-align: center;
     padding: 50px;
-    // background-color: #fff;
-    // border-radius: 10px;
-    // box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 700px;
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out;
   }
   
-  /* Hover effect for content box */
   .content:hover {
     transform: translateY(-5px);
   }
   
-  /* Heading (404) styling */
   .heading {
     font-size: 100px;
-    color: #FE715C; /* Airbnb's primary red color */
+    color: #FE715C;
     font-weight: 700;
     letter-spacing: -2px;
     margin-bottom: 15px;
   }
   
-  /* Message text styling */
   .message {
     font-size: 18px;
     color: #333;
@@ -43,11 +35,10 @@
     font-weight: 500;
   }
   
-  /* Return to Home Button Styling */
   .homeLink {
     font-size: 16px;
     color: #ffffff;
-    background-color: #FE715C; /* Airbnb's red for the button */
+    background-color: #FE715C; 
     text-decoration: none;
     padding: 15px 30px;
     border-radius: 50px;
@@ -57,14 +48,12 @@
     border: 2px solid transparent;
   }
   
-  /* Button hover effect */
   .homeLink:hover {
-    background-color: #FE715C; /* Slightly darker red */
+    background-color: #FE715C; 
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(255, 90, 95, 0.4);
   }
   
-  /* Optional footer text */
   .footerText {
     font-size: 14px;
     color: #888;

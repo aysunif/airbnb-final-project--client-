@@ -32,8 +32,6 @@ const Register = () => {
     });
   };
 
-  // console.log(formData)
-
   const [passwordMatch, setPasswordMatch] = useState(true);
 
   useEffect(() => {
@@ -62,8 +60,6 @@ const Register = () => {
           },
         }
       );
-
-      console.log(response.data.user.profileImagePath);
 
       if (response.status === 200) {
         message.success("Registration successful! You can now log in.");
