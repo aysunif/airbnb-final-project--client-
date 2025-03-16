@@ -21,7 +21,7 @@
   width: 100%;
   max-width: 100vw;
   margin: 0px auto;
-  padding: 5px 0;
+  padding: 8px 0;
   position: sticky;
   top: 87px;
   z-index: 999; 
@@ -29,8 +29,8 @@
   margin-bottom: 20px;
 
   @include sm {
-    padding: 0px 20px;
-  top: 101px;
+    padding: 9px 20px;
+  top: 89px;
 
   }
 }
@@ -67,9 +67,6 @@
       font-weight: 450;
     }
 
-    // &:hover {
-    //   color: $pinkred;
-    // }
   }
 }
 
@@ -115,6 +112,25 @@
   right: 5.5vw;
 }
 
+.empty-message {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  height: 52vh; 
+  font-size: 24px;
+  margin: 10vh 0;
+  font-weight: bold;
+  color: $blue;
+
+  img {
+    width: 400px; 
+    margin-bottom: 15px; 
+  }
+  @include sm {
+    font-size: 20px;
+  }
+}
 
 .listings {
   padding: 0 60px 120px;

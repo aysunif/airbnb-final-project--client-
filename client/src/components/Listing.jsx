@@ -133,6 +133,11 @@ const Listing = () => {
             </Grid>
           ))}
         </Grid>
+      ) : listings.length === 0 ? (
+        <div className={styles["empty-message"]}>
+          <img src="/images/empty.gif" alt="Empty" />
+          <p>There is nothing here :( </p>
+        </div>
       ) : (
         <div className={styles["listings"]}>
           {listings.map(
