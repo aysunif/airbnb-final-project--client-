@@ -15,6 +15,9 @@
   @include sm {
     padding: 10px 20px;
   }
+  @include sm {
+    padding: 10px 20px;
+  }
 
   img {
     width: 130px;
@@ -127,6 +130,18 @@
       img {
         width: 35px;
         height: 35px;
+        @include ml {
+          margin-right: 30px;
+    
+          }
+        @include md {
+          margin-right: 20px;
+    
+          }
+        @include sm {
+          margin-right: 10px;
+    
+          }
       }
     }
 
