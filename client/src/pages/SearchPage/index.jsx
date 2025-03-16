@@ -59,6 +59,13 @@ const SearchPage = () => {
         <meta name="description" content="search page" />
       </Helmet>
       <h1 className={styles["title-list"]}>{search}</h1>
+      {listings.length === 0 ? (
+        <div className={styles["empty-message"]}>
+          <img src="/images/Search.gif" alt="No results" />
+          <h1>Ups!... no results found</h1>
+          <p>Please try another search</p>
+        </div>
+      ) : (
       <div className={styles["list"]}>
         {listings?.map(
           ({
@@ -88,6 +95,7 @@ const SearchPage = () => {
           )
         )}
       </div>
+      )}
     </>
   );
 };
